@@ -94,9 +94,10 @@
 
       // Construct the button URL using the form and amount data
       var buttonUrl =
-        "upi://pay?pa=vinita8@paytm&pn=Anmol&am=1&purpose=nothing&cu=INR&tn=" +
-        encodeURIComponent(email);
-
+        "upi://pay?pa=itunknown@ybl&pn=Zaid&cu=INR&tn=Email " +
+        encodeURIComponent(email) +
+        "&am=" +
+        encodeURIComponent(amount);
       // Redirect user to the button URL
       window.location.href = buttonUrl;
     }
