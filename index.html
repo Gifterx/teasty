@@ -67,7 +67,7 @@
     <div class="card">
       <h1>Enter Your Information, Note: Fill Valid Details Because Your Server Details Will Be Send There.</h1>
       <form id="infoForm" action="">
-        <label for="email">Valid Email:</label>
+        <label for="email">Email:</label>
         <input type="text" id="email" name="email" required>
 
         <label for="name">Name:</label>
@@ -87,17 +87,33 @@
       var email = document.getElementById("email").value;
       var name = document.getElementById("name").value;
       var phone = document.getElementById("phone").value;
-
+      var xhr = new XMLHttpRequest();
       // Get the amount from the website URL
       var urlParams = new URLSearchParams(window.location.search);
       var amount = urlParams.get('amount');
-
+      xhr.open('POST', 'https://api.example.com/endpoint', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      
+      var data = {
+        "key": "3773349693585",
+        "order_id": encodeURIComponent(phone),
+        "amount": encodeURIComponent(amount),
+        "purpose": encodeURIComponent(name),
+        "customer_email": encodeURIComponent(email),
+        "redirect_url": "https://google.com"
+      }  
+      var jsonData = JSON.stringify(data);
+      xhr.send(jsonData);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // Request succeeded, parse the response and handle it here
+          var response = JSON.parse(xhr.responseText);
+          console.log(response);
+        } else if (xhr.readyState === 4 && xhr.status !== 200) {
+          var response = "https//t.me/ServerDukaan";
+        }
       // Construct the button URL using the form and amount data
-      var buttonUrl =
-        "upi://pay?pa=itunknown@ybl&pn=Zaid&cu=INR&tn=Email " +
-        encodeURIComponent(email) +
-        "&am=" +
-        encodeURIComponent(amount);
+      var buttonUrl = encodeURIComponent(response.payment_url);
       // Redirect user to the button URL
       window.location.href = buttonUrl;
     }
